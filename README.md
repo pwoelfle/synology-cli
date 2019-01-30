@@ -1,0 +1,2 @@
+# Synology CLI
+
