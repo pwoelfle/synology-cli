@@ -1,0 +1,11 @@
+required = [
+  "github.com/stretchr/testify"
+]
+
+[[constraint]]
+  name = "github.com/stretchr/testify"
+  version = "v1.3.0"
+
+[prune]
+  go-tests = true
+  unused-packages = true
