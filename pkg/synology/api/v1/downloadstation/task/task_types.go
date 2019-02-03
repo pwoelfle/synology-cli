@@ -5,7 +5,7 @@ type Task struct {
 	Type        Type         `json:"type"`
 	Username    string       `json:"username"`
 	Title       string       `json:"title"`
-	Size        string       `json:"size"`
+	Size        int          `json:"size"`
 	Status      Status       `json:"status"`
 	StatusExtra *StatusExtra `json:"status_extra,omitempty"`
 	Additional  *Additional  `json:"additional,omitempty"`
@@ -19,6 +19,7 @@ const (
 	TypeBitTorrent Type = "BT"
 	TypeNewzbin    Type = "NZB"
 	TypeHTTP       Type = "http"
+	TypeHTTPS      Type = "https"
 	TypeFTP        Type = "ftp"
 	TypeEMule      Type = "eMule"
 )
@@ -77,9 +78,9 @@ type StatusExtra struct {
 type Additional struct {
 	Detail   Detail    `json:"detail"`
 	Transfer Transfer  `json:"transfer"`
-	Files    []File    `json:"file"`
-	Trackers []Tracker `json:"tracker"`
-	Peers    []Peer    `json:"peer"`
+	Files    []File    `json:"file,omitempty"`
+	Trackers []Tracker `json:"tracker,omitempty"`
+	Peers    []Peer    `json:"peer,omitempty"`
 }
 
 type DetailPriority string
@@ -102,10 +103,10 @@ type Detail struct {
 }
 
 type Transfer struct {
-	SizeDownloaded string `json:"size_downloaded"`
-	SizeUploaded   string `json:"size_uploaded"`
-	SpeedDownload  int    `json:"speed_download"`
-	SpeedUpload    int    `json:"speed_upload"`
+	SizeDownloaded int `json:"size_downloaded"`
+	SizeUploaded   int `json:"size_uploaded"`
+	SpeedDownload  int `json:"speed_download"`
+	SpeedUpload    int `json:"speed_upload"`
 }
 
 type FilePriority string

@@ -40,10 +40,10 @@ func NewClient(host string) (Client, error) {
 		},
 	}
 
-	return client, nil
+	return &client, nil
 }
 
-func (c client) requestGet(path string, params map[string]string, object Object) error {
+func (c *client) requestGet(path string, params map[string]string, object Object) error {
 	requestURL := c.baseURL
 
 	if len(requestURL.Path) > 0 {
@@ -98,7 +98,7 @@ func (c client) requestGet(path string, params map[string]string, object Object)
 	return nil
 }
 
-func (c client) Call(req Request, obj Object) error {
+func (c *client) Call(req Request, obj Object) error {
 	path := fmt.Sprintf("/webapi/%s", req.GetCGIPath())
 	params := map[string]string{
 		"api":     req.GetAPIName(),

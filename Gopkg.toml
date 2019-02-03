@@ -1,10 +1,26 @@
 required = [
-  "github.com/stretchr/testify"
+  "github.com/stretchr/testify",
+  "github.com/spf13/cobra",
+  "github.com/spf13/viper",
+  "github.com/dustin/go-humanize",
 ]
 
 [[constraint]]
   name = "github.com/stretchr/testify"
   version = "v1.3.0"
+
+[[constraint]]
+  name = "github.com/spf13/cobra"
+  revision = "7547e83b2d85fd1893c7d76916f67689d761fecb"
+
+[[constraint]]
+  name = "github.com/spf13/viper"
+  revision = "d104d259b3380cb653bb793756823c3c41b37b53"
+
+[[constraint]]
+  name = "github.com/dustin/go-humanize"
+  version = "v1.0.0"
+
 
 [prune]
   go-tests = true
