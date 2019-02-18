@@ -43,7 +43,7 @@ func NewClient(host string) (Client, error) {
 	return &client, nil
 }
 
-func (c *client) requestGet(path string, params map[string]string, object Object) error {
+func (c *client) requestGet(path string, params map[string]string, object Object, errCodeMapper ErrorCodeMapper) error {
 	requestURL := c.baseURL
 
 	if len(requestURL.Path) > 0 {
@@ -82,11 +82,13 @@ func (c *client) requestGet(path string, params map[string]string, object Object
 	}
 
 	if !success {
-		var Error Error
-		if err = json.Unmarshal(*responseObject["error"], &Error); err != nil {
+		var requestError Error
+		if err = json.Unmarshal(*responseObject["error"], &requestError); err != nil {
 			return err
 		}
-		return Error
+		requestError.Message = errCodeMapper(requestError.Code)
+
+		return requestError
 	}
 
 	if object != nil {
@@ -99,15 +101,15 @@ func (c *client) requestGet(path string, params map[string]string, object Object
 }
 
 func (c *client) Call(req Request, obj Object) error {
-	path := fmt.Sprintf("/webapi/%s", req.GetCGIPath())
+	path := fmt.Sprintf("/webapi/%s", req.CGIPath)
 	params := map[string]string{
-		"api":     req.GetAPIName(),
-		"version": strconv.Itoa(req.GetVersion()),
-		"method":  req.GetMethod(),
+		"api":     req.APIName,
+		"version": strconv.Itoa(req.Version),
+		"method":  req.Method,
 	}
 
-	for k, v := range req.GetParams() {
+	for k, v := range req.Params {
 		params[k] = v
 	}
-	return c.requestGet(path, params, obj)
+	return c.requestGet(path, params, obj, req.ErrorCodeMapper)
 }

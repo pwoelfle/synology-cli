@@ -5,9 +5,9 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/pwoelfle/synology-cli/testing/mock/server"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/pwoelfle/synology-cli/testing/mock/server"
 )
 
 func TestClient_RequestGet_IfErrorResponse_ShouldReturnError(t *testing.T) {
@@ -19,10 +19,15 @@ func TestClient_RequestGet_IfErrorResponse_ShouldReturnError(t *testing.T) {
 	sut := newClient(t, server.URL())
 
 	// when:
-	err := sut.requestGet("", map[string]string{}, nil)
+	err := sut.requestGet("", map[string]string{}, nil, func(errCode ErrorCode) string {
+		if errCode == 400 {
+			return "correct"
+		}
+		return "wrong"
+	})
 
 	// then:
-	assert.Equal(t, Error{Code: 400}, err)
+	assert.Equal(t, Error{Code: 400, Message: "correct"}, err)
 }
 
 func TestClient_RequestGet_ShouldLoadObjectAndReturnNil(t *testing.T) {
@@ -35,7 +40,7 @@ func TestClient_RequestGet_ShouldLoadObjectAndReturnNil(t *testing.T) {
 
 	// when:
 	var object = &simpleObject{}
-	err := sut.requestGet("", map[string]string{}, object)
+	err := sut.requestGet("", map[string]string{}, object, func(errCode ErrorCode) string { return "wrong" })
 
 	// then:
 	assert.Nil(t, err)

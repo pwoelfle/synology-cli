@@ -15,5 +15,6 @@ func NewCreateRequest(uri string) client.Request {
 		1,
 		"create",
 		params,
+		taskErrorCodeMapper,
 	)
 }

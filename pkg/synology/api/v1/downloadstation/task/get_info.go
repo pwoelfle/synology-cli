@@ -47,5 +47,6 @@ func NewGetInfoRequest(ids []ID, additionals ...GetInfoRequestAdditional) client
 		1,
 		"getinfo",
 		params,
+		taskErrorCodeMapper,
 	)
 }

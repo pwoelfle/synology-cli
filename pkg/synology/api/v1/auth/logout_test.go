@@ -3,10 +3,10 @@ package auth
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/pwoelfle/synology-cli/pkg/synology/api/v1/common"
 	"github.com/pwoelfle/synology-cli/pkg/synology/client"
 	"github.com/pwoelfle/synology-cli/testing/mock/server"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestLogoutRequest_ShouldReturnNothing(t *testing.T) {
@@ -60,7 +60,8 @@ func TestLogoutRequest_OnError_ShouldReturnNothing(t *testing.T) {
 	// then:
 	assert.NotNil(t, err)
 	expectedError := client.Error{
-		Code: common.ErrorCodeUnknown,
+		Code:    common.ErrorCodeUnknown,
+		Message: "unknown error",
 	}
 	assert.Equal(t, expectedError, err)
 }

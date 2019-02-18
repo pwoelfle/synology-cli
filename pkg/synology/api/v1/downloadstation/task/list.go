@@ -46,5 +46,6 @@ func NewListRequest(offset, limit int, additionals ...ListRequestAdditional) cli
 		1,
 		"list",
 		params,
+		taskErrorCodeMapper,
 	)
 }

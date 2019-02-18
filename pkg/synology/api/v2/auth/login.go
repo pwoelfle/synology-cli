@@ -14,5 +14,6 @@ func NewLoginRequest(username, password, session string, format LoginFormat) cli
 			"session": session,
 			"format":  string(format),
 		},
+		authErrorCodeMapper,
 	)
 }

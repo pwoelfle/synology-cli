@@ -13,5 +13,6 @@ func NewLoginRequest(username, password, session string) client.Request {
 			"passwd":  password,
 			"session": session,
 		},
+		authErrorCodeMapper,
 	)
 }

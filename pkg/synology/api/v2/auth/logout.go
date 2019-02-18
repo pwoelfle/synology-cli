@@ -11,5 +11,6 @@ func NewLogoutRequest(session string) client.Request {
 		client.RequestParams{
 			"session": session,
 		},
+		authErrorCodeMapper,
 	)
 }
